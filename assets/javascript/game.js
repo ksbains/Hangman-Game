@@ -1,10 +1,9 @@
 $(document).ready(function() {
 var wins = 0;
 var gLeft = 5;
-var corWord = [];
-var  guessed = [];
+var corWord = ["_","_","_","_","_"];
+var  guessed = ["_","_","_","_","_"];
 var correct = 0;
-
 // function readTextFile(dict.txt)
 // {
 //     var rawFile = new XMLHttpRequest();
@@ -22,9 +21,8 @@ var correct = 0;
 //     rawFile.send(null);
 // }
 var dict = ["which","there","their","about","would","these","other","words","could","write","first","water","after","where"];
-// var fs = require("fs");
-// var text = fs.readFileSync("./dict.txt", "utf-8");
-// var dict = text.split("\n")
+// this code will choose a random word from dict. 
+var rnum = Math.floor(Math.random() * dict.length ) + 1;
 
 var victories = document.getElementById("wins");
 console.log("victories",document);
@@ -41,48 +39,56 @@ userGuesses.innerHTML = guessed;
 
 document.onkeyup = function(event) {
         
-        // this code will choose a random number from 0-26
         
-        
+        console.log("the random number is: " + rnum);
         // this line of code will take the random number and then convert it to a character
-        var word = dict[Math.floor(Math.random() * dict.length ) + 1]
+        var word = dict[rnum];
         // var word = dict[Math.floor(Math.random(guesses.length))];
         console.log("the word is " + word);
         
         // Captures the key pressed by the user, converts it to lowercase, and saves it to a variable.
         var response = String.fromCharCode(event.keyCode).toLowerCase();
-        console.log("the response is" + response);
-        
+        console.log("the response is " + response);
+        var temp = correct;
+        var loc = [];
+        for(var i = 0; i < word.length; i++){ 
         // if the letter randomly choosen is the same the user selects
-        if (word[correct] === response) {
+        if (word[i] === response) {
+          loc.push(i);
           // increase the correct by 1
           correct++;
           if(correct === word.length){
             // reset the correct variable. 
             correct = 0;
+            temp = 0;
             // increent wins
             wins++;
             // reset the guesses left
             gLeft = 5;
             // reset the guesses array
-            guessed = [];
+            guessed = ["_","_","_","_","_"];
             // reset the number for new word
             word = dict[Math.floor(Math.random(guesses.length))];
             // log to console for maintence
             console.log("the NEW word is " + word);
+            corWord = ["_","_","_","_","_"];
           }
           else{
             // changing the underscore to the letter
-            corWord[correct-1] = word[correct];
+            console.log("your response is in the word, now placing: " + response + " into corWord");
+            corWord[i] = word[i];
+            console.log("corWord is: " + corWord);
           }
         }
-
-
-        else{
+      }
+        // if(correct == 0){
+        if(correct >= temp){
+          temp++;
           // console log for maintence
-          console.log("the letter is !== response");
+          console.log("the response is not in the word");
           // decrement the guesses left
           gLeft--;
+          guessed[temp] = response;
           //if no more guesses left
           if(gLeft === 0){
             console.log("there are no more guesses left");
@@ -103,14 +109,13 @@ document.onkeyup = function(event) {
           }
           else{
             console.log("guesses remaining: " + gLeft);
-            guessed.push(response);
             console.log(guessed);
           }
         }
 
-          victories.innerHTML = "Wins: " + wins;
-          remainGuesses.innerHTML = "Guesses Left: " + gLeft;
-          userGuesses.innerHTML = "Your Guesses so far: " + guessed;
+          victories.innerHTML = wins;
+          remainGuesses.innerHTML = gLeft;
+          userGuesses.innerHTML = guessed;
           currentWord.innerHTML = corWord;
       };
 });
