@@ -19,6 +19,7 @@ currentWord.innerHTML = corWord;
 var userGuesses = document.getElementById("guessed");
 userGuesses.innerHTML = guessed;
  var temp = 0;
+ var dups = 0; 
  function init (letter, word){
  	for(var i = 0; i < word.length; i++){
  		if(word[i] === letter){
@@ -33,6 +34,7 @@ userGuesses.innerHTML = guessed;
 	 guessed = [];
 	 correct = 0;
 	 temp = 0;
+     dups = 0;
 	 rnum = Math.floor(Math.random() * dict.length );
 	 word = dict[rnum];
 	 // var word = dict[Math.floor(Math.random(guesses.length))];
@@ -51,26 +53,41 @@ document.onkeyup = function(event) {
         // Captures the key pressed by the user, converts it to lowercase, and saves it to a variable.
         var response = String.fromCharCode(event.keyCode).toLowerCase();
         console.log("the response is " + response);
-
+        
         for(var i = 0; i < word.length; i++){
         	if (response === word[i]) {
-        		corWord[i] = response;
-        		correct++;
+                dups++;
+        		if(!init(response,corWord)){
+                    correct++;
+                }
+                corWord[i] = response;
         		if(correct === word.length){
-        			console.log("game has started Over");
+        			console.log("startOver: WIN");
         			startOver();
         			wins++;
         		}
         	}
         }
+        if(dups > correct){
+            correct = dups;
+        }
         if(correct == temp){
-        	gLeft--;
-        	if(init(response,corWord)){
+        	
+        	if(init(response,guessed)){
         		gLeft++;
         	}
-        	else{
-        		guessed.push(response);	
+        	else if(init(response,corWord)){
+        		gLeft++;
+                console.log("got something right and choosing it again");	
         	}
+            else{
+                guessed.push(response);
+            }
+            gLeft--;
+            if(gLeft == 0){
+                startOver();
+                console.log("startOver: LOSE");
+            }
         }
         if(correct > temp){
         	if(!init(response,guessed)){
