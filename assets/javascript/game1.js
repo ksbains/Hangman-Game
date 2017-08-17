@@ -7,6 +7,7 @@ var correct = 0;
 var dict = ["which","there","their","about","would","these","other","words","could","write","first","water","after","where"];
 var rnum = Math.floor(Math.random() * dict.length ) + 1;
 var victories = document.getElementById("wins");
+
 console.log("victories",document);
 victories.innerHTML = wins;
 
@@ -18,16 +19,15 @@ currentWord.innerHTML = corWord;
 
 var userGuesses = document.getElementById("guessed");
 userGuesses.innerHTML = guessed;
- var temp = 0;
- var dups = 0; 
- function init (letter, word){
- 	for(var i = 0; i < word.length; i++){
- 		if(word[i] === letter){
- 			return true;
- 		}
+
+function init (letter, word){
+ for(var i = 0; i < word.length; i++){
+    if(word[i] === letter){
+ 		return true;
  	}
- 	return false;
  }
+    return false;
+}
 
  function startOver(){
 	 corWord = ["_","_","_","_","_"];
