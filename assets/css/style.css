@@ -24,7 +24,8 @@
 
 }
 body {
-	 background-image: url("file:///home/karanbir/Documents/Summer17/Boot-Camp/Hangman-Game/assets/images/hangman.jpg");
+	 /*background-image: url("file:///home/karanbir/Documents/Summer17/Boot-Camp/Hangman-Game/assets/images/hangman.jpg");*/
+	 background-image: url("http://wallpapersin4k.net/wp-content/uploads/2017/02/Hangman-Movie-Wallpapers-8.jpg");
 }
 
 .container-fluid{
