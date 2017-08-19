@@ -1,34 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>The Hangman Game</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="./assets/javascript/game2.js"></script>
-</head>
-<body>
-  <header>
-    <h1>Hangman</h1>
-    <nav>
-      <a href="">About</a>
-    </nav>
-  </header>
-  <h1>Press any key to get started</h1>
-  
-  <h2>Wins:<p id="wins"> </p></h2>
-  <h2>Losses:<p id="losses"> </p></h2>
+  <head>
+  	<title class="container-fluid">The Hangman Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script src="./assets/javascript/game2.js"></script>
+  </head>
 
-  <h2>Current word
-    <p id="currWord">
-    </p>
-  </h2>
-
-  <h2>Number of guesses remaining<p id="gLeft"></p></h2>
-
-  <h2> Letters already guessed
-    <p id="guessed">
+  <body>
+    <header>
+      <h1>Hangman</h1>
+      <nav class="container-fluid">
+        <a href="https://ksbains.github.io/Bootstrap-Portfolio/">About Author</a>
+      </nav>
+    </header>
+    <div class="container-fluid">
       
-    </p>
-  </h2>
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>Press any letter to get started</h1>
+        </div>
+      </div>
 
-</body>
+      <div id = "score" class="row">
+        <div class="score-element col-xs-4 ">
+          <h2>Wins:<p id="wins"> </p></h2>
+        </div>
+        
+        <div class ="score-element col-xs-4 ">
+          <h2>Losses:<p id="losses"> </p></h2>
+        </div>
+        
+        <div class ="score-element col-xs-4 ">
+          <h2>Guesses:<p id="gLeft"> </p></h2>
+        </div>
+      </div>
+
+      <div id="words" class = "row">
+        <div class="col-xs-6">
+          <h2>Current word<p id="currWord"></p></h2>
+        </div>
+        
+        <div class=" = col-xs-6">
+          <h2> Guessed<p id="guessed"></p></h2>
+        </div>
+      </div>
+
+    </div>
+  </body>
 </html>

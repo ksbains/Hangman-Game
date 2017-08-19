@@ -6,7 +6,7 @@ var game = {
 	corWord: ["_","_","_","_","_"],
 	guessed: [],
 	word: "",
-	dict: ["which","there","their","about","would","these","other","words","could","write","first","water","after","where"]
+	dict: ["which","there","their","about","would","these","other","words","could","write","first","water","after","where","hippos"]
 };
 
 function init(letter, word){
@@ -60,14 +60,19 @@ $(document).ready(function() {
 	currentWord.innerHTML = game.corWord;
 
 	var userGuesses = document.getElementById("guessed");
-	userGuesses.innerHTML = guessed;
+	// userGuesses.innerHTML = guessed;
 
 	// on the key up the game will start
 	document.onkeyup = function(event) {
 		// logs the word and response
 		console.log("the word is " + game.word);
-		var response = String.fromCharCode(event.keyCode).toLowerCase();
-		console.log("the response is " + response);
+		console.log("the event key code is: " + event.keyCode);
+		if((65<=event.keyCode) && (event.keyCode<=90)){
+			response = String.fromCharCode(event.keyCode).toLowerCase();
+			console.log("the response is " + response);
+		}else{
+			alert("Please eneter any LETTER to play the game. Nobody likes a rebel")
+		}
 
 		// if the response is in the word and not already guessed
 		// then get an array of the loctions the letter is in the word
@@ -86,8 +91,12 @@ $(document).ready(function() {
 				startOver(true);
 			}
 		}else{
-			if(!init(response, game.guessed)){
-				game.guessed.push(response);
+			if(!init(response, game.guessed) && !init(response,game.corWord)){
+				if(game.guessed[0]===""){
+					game.guessed[0] = response;
+				}else{
+					game.guessed.push(response);
+				}
 				game.gLeft--;
 				if(game.gLeft == 0){
 					startOver(false);
@@ -97,7 +106,14 @@ $(document).ready(function() {
 		defeats.innerHTML = game.losses;
 		victories.innerHTML = game.wins;
         remainGuesses.innerHTML = game.gLeft;
-        userGuesses.innerHTML = game.guessed;
         currentWord.innerHTML = game.corWord;
+		if(!(game.guessed.length === 0)){
+			userGuesses.innerHTML = game.guessed;
+		}
+		else{
+			game.guessed = [""];
+			userGuesses.innerHTML = game.guessed;	
+		}
+		
 	};
 });
