@@ -1,0 +1,14 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "this is the conosole version of the web browser game",
+  "main": "hangman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Karanbir Bains",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^3.3.0"
+  }
+}
