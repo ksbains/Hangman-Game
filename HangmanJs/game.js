@@ -16,18 +16,13 @@ game.prototype.start = function(word) {
 
 game.prototype.guessLetter = function (letter, cb) {
     // Has letter already been guessed?
-    console.log("before");
-    console.log(this.validGuesses);
-    console.log("after");
-
-        // Has the letter already been guessed?
     if (this.validGuesses.indexOf(letter) !== -1 || this.invalidGuesses.indexOf(letter) !== -1) {
         console.log("the letter " + letter + " has already been guessed, try something else");
-        return;
+        cb();
     }
     // Is letter in word?
         if (this.currentWord.word.indexOf(letter) !== -1) {
-        console.log("the currentWord inside of guessLetter is: " + this.currentWord.word);
+        //console.log("the currentWord inside of guessLetter is: " + this.currentWord.word);
             this.validGuesses.push(letter);
         } else {
         this.invalidGuesses.push(letter);
@@ -65,34 +60,34 @@ game.prototype.guessLetter = function (letter, cb) {
 
 game.prototype.display = function(cb) {
 	// Iterate over word letters
-	var toDisplay = this.currentWord.word;
+	var toDisplay = [];
 	console.log("inside to display the currentWord is: " + this.currentWord.word);
 	for(var i = 0; i < this.currentWord.word.length; i++){
-		if(!this.in(this.currentWord[i],this.validGuesses)){
+		if(!this.in1(this.currentWord.word[i],this.validGuesses)){
 			toDisplay[i] = "_";
-		}
+		}else{
+            toDisplay[i] = this.currentWord.word[i];
+        }
 	}
-	console.log(toDisplay);
+	console.log(toDisplay.toString());
 	cb();
 };
 
-// game.prototype.in = function(char, arr) {
-// 	console.log("the in function has been called. the arr is: ");
-// 	console.log(arr);
-// 	if(arr.length === 0){return false;}
+game.prototype.in1 = function(char, arr) {
+	//console.log("the in function has been called. the arr is: ");
+	//console.log(arr);
+	if(arr.length === 0){return false;}
 
-// 	for(var i = 0; i < arr.length; i++){
-// 		if(arr[i] === char){
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// };
+	for(var i = 0; i < arr.length; i++){
+		if(arr[i] === char){
+			return true;
+		}
+	}
+	return false;
+};
 game.prototype.in = function(char, arr) {
-    console.log("the in function has been called. the arr is: ");
-    console.log(arr);
-    if(arr.length === 0){return false;}
 
+    if(arr.length === 0){return false;}
         // returns (true|false) checking if char is in arr
         return (arr.indexOf(char) !== -1);
 };

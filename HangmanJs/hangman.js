@@ -2,6 +2,7 @@ var inquirer = require("inquirer");
 var game = require ('./game.js');
 var currGame = new game();
 currGame.start();
+//currGame.start();
 // Created a series of questions
 
 function prompt(){
@@ -31,8 +32,7 @@ function start(){
     }
   ]).then(function(response){
     if(response.confirm){
-      console.log("The game is a foot!");
-      //currGame.start();
+      //console.log("The game is a foot!");
       prompt();
     }
   });
