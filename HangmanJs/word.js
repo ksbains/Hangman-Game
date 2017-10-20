@@ -1,18 +1,31 @@
-var word = function (){
-	w:"";
-	size:0;
-	g:0;
+const dict = require ('./dictionary.js');
 
+
+var word = function (){
+	word:"";
 }
 
 word.prototype.setWord = function(word) {
 	this.word = word;
 };
 
-word.prototype.setSize = function(size) {
-	this.size = size;
+word.prototype.setRandomWord = function() {
+	// Get random word from dict
+	var rnum = Math.floor(Math.random() * dict.words.length);
+	var randomWord = dict.words[rnum];
+	this.setWord(randomWord);
+	return this;
 };
 
-word.prototype.incrementGuess = function() {
-	this.g++;
+word.prototype.contain = function(letter) {
+	for(var i = 0; i< this.w.length; i++){
+		if(this.w[i] === letter){
+			return true;
+		}else{
+			return false;
+		}
+	}
 };
+
+
+module.exports = word;

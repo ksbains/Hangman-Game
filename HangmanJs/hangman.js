@@ -1,39 +1,40 @@
 var inquirer = require("inquirer");
-
+var currGame = require ('./game.js');
 // Created a series of questions
-inquirer.prompt([
 
-  {
-    type: "input",
-    name: "name",
-    message: "Who are you???"
-  },
+function prompt(){
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "letter",
+      message: "Guess a letter?"
+    },
+  ]).then(function(response) {
+    if(response.letter.length === 1){
+      currGame.guessLetter(response.letter, prompt);
+    }else{
+      console.log("enter only one letter plz");
+      prompt();
+    }
+  });
+};
 
-  {
-    type: "list",
-    name: "doingWhat",
-    message: "What are you doing in my house??",
-    choices: ["I made you cookies!", "No lie dude. I'm here to rob you.", "Uh. This is my house... Who are YOU???"]
-  },
+function start(){
+  inquirer.prompt([
+     {
+      type: "confirm",
+      name: "start",
+      message: "would you like to play the game?"
+    }
+  ]).then(function(response){
+    if(response.confirm){
+      console.log("The game is a foot!");
+      game.start();
+      prompt();
+    }
+  });
+};
 
-  {
-    type: "checkbox",
-    name: "carryingWhat",
-    message: "What are you carrying in your hands??",
-    choices: ["TV", "Slice of Toast", "Butter Knife"]
-  },
-
-  {
-    type: "confirm",
-    name: "canLeave",
-    message: "Can you leave now?"
-  },
-
-  {
-    type: "password",
-    name: "myPassword",
-    message: "Okay fine. You can stay. But only if you say the magic password."
-  }
-
-]).then(function(user) {}
+//start();
+prompt();
 
