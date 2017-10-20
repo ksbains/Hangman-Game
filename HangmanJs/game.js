@@ -1,41 +1,74 @@
 var word = require('./word.js');
+var currWord = new word();
 
 var game = function (){
-	currentWord: null;
-	validGuesses: [];
-	invalidGuesses: [];
-	maxInvalidGuesses: 5;
+    this.currentWord = null;
+    this.validGuesses = [];
+    this.invalidGuesses = [];
+    this.maxInvalidGuesses = 5;
 }
 
 game.prototype.start = function(word) {
-	this.currentWord = word.setRandomWord();
+	this.currentWord = currWord.setRandomWord();
+	console.log("the game is a foot " + this.currentWord.word);
 
 };
 
 game.prototype.guessLetter = function (letter, cb) {
-	// Has letter already been guessed?
-	if(game.in(letter, game.validGuesses) || game.in(letter, invalidGuesses)){
-		console.log("the letter " + letter + " has already been guessed, try something else");
-		return;
-	}
-	// Is letter in word?
-	if(game.in(letter, game.currentWord)){
-		game.validGuesses.push(letter);
-		game.display(cb);
-	}else{
-		game.invalidGuesses.push(letter);
-		if(game.invalidGuesses.length === game.maxInvalidGuesses){
-			game.gameOver();
-		}
-		game.display(cb);
-	}
+    // Has letter already been guessed?
+    console.log("before");
+    console.log(this.validGuesses);
+    console.log("after");
+
+        // Has the letter already been guessed?
+    if (this.validGuesses.indexOf(letter) !== -1 || this.invalidGuesses.indexOf(letter) !== -1) {
+        console.log("the letter " + letter + " has already been guessed, try something else");
+        return;
+    }
+    // Is letter in word?
+        if (this.currentWord.word.indexOf(letter) !== -1) {
+        console.log("the currentWord inside of guessLetter is: " + this.currentWord.word);
+            this.validGuesses.push(letter);
+        } else {
+        this.invalidGuesses.push(letter);
+                // Did they Lose?
+        if (this.invalidGuesses.length === this.maxInvalidGuesses){
+            this.gameOver();
+        }
+        }
+    this.display(cb);
 };
+
+// game.prototype.guessLetter = function (letter, cb) {
+// 	// Has letter already been guessed?
+// 	console.log("before");
+// 	console.log(this.validGuesses);
+// 	console.log("after");
+
+// 	if (this.validGuesses.indexOf(letter) !== -1 || this.invalidGuesses.indexOf(letter) !== -1) {
+// 		console.log("the letter " + letter + " has already been guessed, try something else");
+// 		return;
+// 	}
+// 	// Is letter in word?
+// 	console.log("the currentWord inside of guessLetter is: " + this.currentWord.word);
+// 	if(this.in(letter, this.currentWord.word)){
+// 		this.validGuesses.push(letter);
+// 		this.display(cb);
+// 	}else{
+// 		this.invalidGuesses.push(letter);
+// 		if(this.invalidGuesses.length === this.maxInvalidGuesses){
+// 			this.gameOver();
+// 		}
+// 		this.display(cb);
+// 	}
+// };
 
 game.prototype.display = function(cb) {
 	// Iterate over word letters
-	var toDisplay = game.currentWord;
-	for(var i = 0; i < game.currentWord.length; i++){
-		if(!game.in(game.currentWord[i],game.validGuesses)){
+	var toDisplay = this.currentWord.word;
+	console.log("inside to display the currentWord is: " + this.currentWord.word);
+	for(var i = 0; i < this.currentWord.word.length; i++){
+		if(!this.in(this.currentWord[i],this.validGuesses)){
 			toDisplay[i] = "_";
 		}
 	}
@@ -43,21 +76,32 @@ game.prototype.display = function(cb) {
 	cb();
 };
 
+// game.prototype.in = function(char, arr) {
+// 	console.log("the in function has been called. the arr is: ");
+// 	console.log(arr);
+// 	if(arr.length === 0){return false;}
+
+// 	for(var i = 0; i < arr.length; i++){
+// 		if(arr[i] === char){
+// 			return true;
+// 		}
+// 	}
+// 	return false;
+// };
 game.prototype.in = function(char, arr) {
-	for(var i = 0; i < arr.length; i++){
-		if(arr[i] === char){
-			return true;
-		}else{
-			return false;
-		}
-	}
+    console.log("the in function has been called. the arr is: ");
+    console.log(arr);
+    if(arr.length === 0){return false;}
+
+        // returns (true|false) checking if char is in arr
+        return (arr.indexOf(char) !== -1);
 };
 
 game.prototype.gameOver = function() {
 	// hen the game i over
-	if(game.invalidGuesses.length === game.maxInvalidGuesses){
+	if(this.invalidGuesses.length === this.maxInvalidGuesses){
 		console.log("you got it wrong!! net word.");
-		game.start();
+		this.start();
 	}
 	console.log("You got it right!! good job!!");
 	

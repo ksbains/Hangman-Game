@@ -9,6 +9,10 @@ word.prototype.setWord = function(word) {
 	this.word = word;
 };
 
+word.prototype.length = function(){
+	return this.word.length;
+}
+
 word.prototype.setRandomWord = function() {
 	// Get random word from dict
 	var rnum = Math.floor(Math.random() * dict.words.length);

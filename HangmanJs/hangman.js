@@ -1,5 +1,7 @@
 var inquirer = require("inquirer");
-var currGame = require ('./game.js');
+var game = require ('./game.js');
+var currGame = new game();
+currGame.start();
 // Created a series of questions
 
 function prompt(){
@@ -10,8 +12,9 @@ function prompt(){
       message: "Guess a letter?"
     },
   ]).then(function(response) {
-    if(response.letter.length === 1){
-      currGame.guessLetter(response.letter, prompt);
+    console.log("the response is: " + response.letter);
+    if (response.hasOwnProperty('letter') && typeof response.letter === 'string' && response.letter.length === 1){
+      currGame.guessLetter(response.letter[0], prompt);
     }else{
       console.log("enter only one letter plz");
       prompt();
@@ -29,7 +32,7 @@ function start(){
   ]).then(function(response){
     if(response.confirm){
       console.log("The game is a foot!");
-      game.start();
+      //currGame.start();
       prompt();
     }
   });
