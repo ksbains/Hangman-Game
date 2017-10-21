@@ -11,6 +11,8 @@ var game = function (){
 game.prototype.start = function(word) {
 	this.currentWord = currWord.setRandomWord();
 	console.log("the game is a foot " + this.currentWord.word);
+    this.invalidGuesses = [];
+    this.validGuesses = [];
 
 };
 
@@ -21,47 +23,24 @@ game.prototype.guessLetter = function (letter, cb) {
         cb();
     }
     // Is letter in word?
-        if (this.currentWord.word.indexOf(letter) !== -1) {
-        //console.log("the currentWord inside of guessLetter is: " + this.currentWord.word);
-            this.validGuesses.push(letter);
-        } else {
-        this.invalidGuesses.push(letter);
-                // Did they Lose?
-        if (this.invalidGuesses.length === this.maxInvalidGuesses){
-            this.gameOver();
+    if(this.currentWord.word.indexOf(letter) !== -1 && !(this.validGuesses.indexOf(letter) !== -1 )) {
+        this.validGuesses.push(letter);
+        if(this.validGuesses.length === this.currentWord.word.length){this.gameOver();}
+    }else {
+        if(!this.invalidGuesses.indexOf(letter) !== -1){
+            this.invalidGuesses.push(letter);
+            var gLeft = this.maxInvalidGuesses - this.invalidGuesses.length;
+            console.log("Incorrect! you have " + gLeft + " guesses left!");
+            if (this.invalidGuesses.length === this.maxInvalidGuesses){this.gameOver();}
         }
-        }
+    }
     this.display(cb);
 };
-
-// game.prototype.guessLetter = function (letter, cb) {
-// 	// Has letter already been guessed?
-// 	console.log("before");
-// 	console.log(this.validGuesses);
-// 	console.log("after");
-
-// 	if (this.validGuesses.indexOf(letter) !== -1 || this.invalidGuesses.indexOf(letter) !== -1) {
-// 		console.log("the letter " + letter + " has already been guessed, try something else");
-// 		return;
-// 	}
-// 	// Is letter in word?
-// 	console.log("the currentWord inside of guessLetter is: " + this.currentWord.word);
-// 	if(this.in(letter, this.currentWord.word)){
-// 		this.validGuesses.push(letter);
-// 		this.display(cb);
-// 	}else{
-// 		this.invalidGuesses.push(letter);
-// 		if(this.invalidGuesses.length === this.maxInvalidGuesses){
-// 			this.gameOver();
-// 		}
-// 		this.display(cb);
-// 	}
-// };
 
 game.prototype.display = function(cb) {
 	// Iterate over word letters
 	var toDisplay = [];
-	console.log("inside to display the currentWord is: " + this.currentWord.word);
+	//console.log("inside to display the currentWord is: " + this.currentWord.word);
 	for(var i = 0; i < this.currentWord.word.length; i++){
 		if(!this.in1(this.currentWord.word[i],this.validGuesses)){
 			toDisplay[i] = "_";
@@ -95,11 +74,12 @@ game.prototype.in = function(char, arr) {
 game.prototype.gameOver = function() {
 	// hen the game i over
 	if(this.invalidGuesses.length === this.maxInvalidGuesses){
-		console.log("you got it wrong!! net word.");
+		console.log("you got it wrong!! next word.");
 		this.start();
-	}
-	console.log("You got it right!! good job!!");
-	
+	}else{
+	   console.log("You got it right!! good job!!");
+	   this.start();
+    }
 };
 
 module.exports = game;
